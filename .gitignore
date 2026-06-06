@@ -1,0 +1,32 @@
+# .gitignore for Streak Guardian
+.env
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+.venv/
+
+# Database (personal data)
+database/streak.db
+
+# Logs & screenshots (personal data)
+logs/
+screenshots/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Playwright state
+playwright-state.json

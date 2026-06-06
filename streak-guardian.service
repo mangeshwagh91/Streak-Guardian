@@ -1,0 +1,25 @@
+[Unit]
+Description=Streak Guardian — Automated GitHub & LeetCode streak protection
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/streak-guardian
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/streak-guardian/venv/bin/python main.py
+Restart=on-failure
+RestartSec=30
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=streak-guardian
+
+# Security hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ReadWritePaths=/opt/streak-guardian
+
+[Install]
+WantedBy=multi-user.target
