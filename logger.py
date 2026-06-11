@@ -84,8 +84,10 @@ def _setup_root_logger() -> None:
     root = logging.getLogger()
     root.setLevel(_LOG_LEVEL)
 
-    # Console handler
-    ch = logging.StreamHandler(sys.stdout)
+    # Console handler — use UTF-8 to handle emoji on Windows
+    import io
+    utf8_stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace", line_buffering=True)
+    ch = logging.StreamHandler(utf8_stdout)
     ch.setLevel(_LOG_LEVEL)
     ch.setFormatter(_console_fmt)
     root.addHandler(ch)

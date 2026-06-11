@@ -162,7 +162,8 @@ def protection_job() -> None:
 
             submitter = LeetCodeSubmitter(
                 username=settings.leetcode.username,
-                password=settings.leetcode.password,
+                session_cookie=settings.leetcode.session_cookie,
+                csrf_token=settings.leetcode.csrf_token,
                 screenshots_dir=settings.app.screenshots_dir,
                 language_id=settings.leetcode.language_id,
             )
@@ -171,7 +172,9 @@ def protection_job() -> None:
                 solution_code=solution_code,
             )
 
-            if result.get("success"):
+            # success=True OR status='submitted'/'timeout' both mean the submit was sent
+            submission_sent = result.get("success") or result.get("status") in ("submitted", "timeout")
+            if submission_sent:
                 db.upsert_streak("leetcode", had_activity=True, auto_saved=True,
                                  detail=result.get("status", ""))
                 db.log_action("leetcode", "submit", "success",

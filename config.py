@@ -66,15 +66,19 @@ class LeetCodeConfig:
     default_problem_slug: str
     default_solution_file: str
     language_id: int
+    session_cookie: str
+    csrf_token: str
 
     @classmethod
     def from_env(cls) -> "LeetCodeConfig":
         return cls(
             username=_require("LEETCODE_USERNAME"),
-            password=_require("LEETCODE_PASSWORD"),
+            password=_optional("LEETCODE_PASSWORD", ""),
             default_problem_slug=_optional("LEETCODE_DEFAULT_PROBLEM_SLUG", "two-sum"),
             default_solution_file=_optional("LEETCODE_DEFAULT_SOLUTION_FILE", "problem1.py"),
             language_id=int(_optional("LEETCODE_LANGUAGE_ID", "71")),
+            session_cookie=_optional("LEETCODE_SESSION", ""),
+            csrf_token=_optional("LEETCODE_CSRFTOKEN", ""),
         )
 
 
